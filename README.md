@@ -29,22 +29,22 @@ number of passes, each pass can output image data and/or text. Video data can be
       | Prediction | Show kalman filter prediction                        | Image, Text |
       | Kalman Difference | Show difference between center and Kalman prediction | Image|
 
-    * Display
-
-      | Name | Description                                                      | Type  |
-      |------|------------------------------------------------------------------|-------|
-      | Grid     | Show grid                                                    | Image |
-      | BPM      | beats (throsw) per minute                                    | Image |
-      | Dwell Ratio   | Show dwell time as a ratio to BPM.                      | Image |
-      | Object Labels | Show what type of object is being displayed             | Image |
-      | Frame Number  | Show frame number                                       | Image |
-      | Average throw | Show path of average throw                              | Image |
-      | Site Swap throw | Show path of Even/Odd/Both site swaps                 | Image |
-      | Catch count   |                                                         | Image |
-
     * Pose estimation
 
       | Name | Description                                                      | Type  |
       |------|------------------------------------------------------------------|-------|
       | Hands    | Show hands based on mediapipe                                | Image |
       | Pose     | Show pose based on mediapipe                                 | Image |
+
+    * Display
+
+      | Name | Description                                                      | Type  |
+      |------|------------------------------------------------------------------|-------|
+      | Grid     | Show grid                                                    | Image |
+      | BPM      | beats (throws) per minute                                    | Image |
+      | Dwell Ratio   | Show dwell time as a ratio to BPM.                      | Image |
+      | Object Labels | Show what type of object is being displayed             | Image |
+      | Frame Number  | Show frame number                                       | Image |
+      | Average throw | Show path of average throw                              | Image |
+      | Site Swap throw | Show path of Even/Odd/Both site swaps                 | Image |
+      | Catch count   | Show the current number of catches                      | Image, Text |
