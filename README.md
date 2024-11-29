@@ -47,4 +47,17 @@ number of passes, each pass can output image data and/or text. Video data can be
       | Frame Number  | Show frame number                                       | Image |
       | Average throw | Show path of average throw                              | Image |
       | Site Swap throw | Show path of Even/Odd/Both site swaps                 | Image |
-      | Catch count   | Show the current number of catches                      | Image, Text |
+      | Catch count   | Show the current number of catches                | Image, Text |
+
+## Resources
+
+### Videos
+
+* [Object Tracking with Opencv and Python - YouTube](https://www.youtube.com/watch?v=O3b8lVF93jU)
+* [Predict trajectory of an Object with Kalman filter - YouTube](https://www.youtube.com/watch?v=3iqRhbXBVRE)
+* [Identify any object with python - Beginner Guide - YouTube](https://www.youtube.com/watch?v=hVRz29N_zpg) -- intro to YOLO.
+
+### Web pages
+
+* [OpenCV - Stream video to web browser/HTML page - PyImageSearch](https://pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/)
+
