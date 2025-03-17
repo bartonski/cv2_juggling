@@ -27,6 +27,11 @@ class JugglingObjectDetector:
                                  cv2.THRESH_BINARY )
         return mask
         
+    def contours( mask ):
+        contours, _ = cv2.findContours( mask,
+                                        cv2.RETR_TREE,
+                                        cv2.CHAIN_APPROX_SIMPLE )
+        return contours
 
 
 def main():
@@ -41,8 +46,8 @@ def main():
 
     jd = JugglingObjectDetector( config ) 
 
-    cv2.namedWindow("Juggling", cv2.WINDOW_NORMAL)
-    #cv2.namedWindow("Mask", cv2.WINDOW_NORMAL)
+    cv2.namedWindow("Juggling")
+    cv2.namedWindow("Mask")
 
     ret, frame = cap.read()
     # ret = True
