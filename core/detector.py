@@ -2,7 +2,7 @@ import sys
 import cv2
 
 
-class JugglingObjectDetector:
+class Detector:
     """ This class provides a tree representation of the functions
         call stack. If a function has no parent in the kernel (interrupt,
         syscall, kernel thread...) then it is attached to a virtual parent
@@ -44,7 +44,7 @@ def main():
 
     cap = cv2.VideoCapture(filename)
 
-    jd = JugglingObjectDetector( config ) 
+    jd = Detector( config ) 
 
     cv2.namedWindow("Juggling")
     cv2.namedWindow("Mask")
