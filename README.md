@@ -9,6 +9,14 @@ Here's what this consists of:
 * `cv2_juggling.py`: The idea here is that video will be read frame at a time,
 and fed into a function that processes the video. Processing happens through a
 number of passes, each pass can output image data and/or text. Video data can be output as image files written to disk or layered on output video. Output video can be displyed on screen and/or written to a video file. Here are the passes and their output:
+    * Basic Frame Manipulation
+
+      | Name | Description                                                      | Type  |
+      |------|------------------------------------------------------------------|-------|
+      | Frame Range | Start and end fram                                        | Image |
+      | Rotation    | Rotate 90 Clockwise, 90 Counter-clockwise or 180          | Image |
+      | ROI         | Show Region of interest                                   | Image |
+
     * Background Subtraction
 
       | Name | Description                                                      | Type  |
@@ -18,7 +26,8 @@ number of passes, each pass can output image data and/or text. Video data can be
       | Centers | Points at the centers of Contours                       | Image, Text |
       | Trails  | History of centers.                                           | Image |
       | Color Range | Show mask based on color range                            | Image |
-      | ROI         | Show Region of interest                                   | Image |
+
+        * Configuration
 
     * Tracking: Compare center of current list of contours. If center is within tracking radius, it's condisered to be the same object. 
 
