@@ -18,7 +18,7 @@ class PoseDetector:
             output_segmentation_masks=True)
         self.detector = vision.PoseLandmarker.create_from_options(options)
 
-    def draw_landmarks_on_image(self,image):
+    def draw(self,image):
         cv_mat = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=cv_mat)
         rgb_image = mp_image.numpy_view()
@@ -73,7 +73,7 @@ def main():
     while ret:
         # Get layers
         pose.get_pose( frame )
-        cv2.imshow("Pose", pose.draw_landmarks_on_image( frame ) )
+        cv2.imshow("Pose", pose.draw( frame ) )
 
         key = cv2.waitKey(1)
         if key == 27:

@@ -9,6 +9,7 @@ def main():
     detector_config = {
         'detector_history': 100,
         'detector_threshold': 40,
+        'area_threshold': 50,
         'grey_threshold': 255
     }
     pose_detector_config = {
@@ -33,7 +34,7 @@ def main():
         mask = jd.mask( frame )
         pose.get_pose( frame )
         cv2.imshow("Juggling", frame)
-        cv2.imshow("Mask", pose.draw_landmarks_on_image( mask ) ) 
+        cv2.imshow("Mask", pose.draw( mask ) ) 
 
         key = cv2.waitKey(1)
         if key == 27:

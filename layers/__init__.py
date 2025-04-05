@@ -1,5 +1,11 @@
 class Layer:
     def __init__(self,config):
         self.config=config
-        self.cv2=config["cv2"]
+
+    # Create new image
+    def image(self, image):
         self.image=config["image"]
+
+    # Draw layer on top of image
+    def draw(self, image):
+        pass
