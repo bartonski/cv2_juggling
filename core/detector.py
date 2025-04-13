@@ -27,12 +27,12 @@ class Detector:
                                  self._grey_threshold_max,
                                  cv2.THRESH_BINARY )
         return mask
- 
+
     def contours( self, mask ):
         contours, _ = cv2.findContours( mask,
                                         cv2.RETR_TREE,
                                         cv2.CHAIN_APPROX_SIMPLE )
-        self.contours = contours
+        self.detected_contours = contours
         return contours
 
     def centers( self ):
@@ -52,6 +52,11 @@ class Tracker:
         self._area_threshold = config['area_threshold']
         self._tracking_threshold = config['tracking_threshold']
         self._traveler_id = 0
+
+    def get_traveler_id( self ):
+        self._traveler_id += 1
+        return self._traveler_id
+
 
     def get_center( self, contour ):
         M = cv2.moments(contour)
@@ -77,19 +82,22 @@ class Tracker:
     def populate_traveler(self, new, old, velocity):
         new_velocity = velocity
         old_velocity = None
-        if old["velocity"]:
+        if old.get("velocity"):
             old_velocity = old["velocity"]
-        if old["seen"]:
-            acceleration_x = new_velocity[0] - old_velocity[0]
-            acceleration_y = new_velocity[1] - old_velocity[1]
-            new["acceleration"] = [ acceleration_x, acceleration_y]
-        new["traveler_id"] = old["traveler_id"]
+            if old["seen"]:
+                acceleration_x = new_velocity[0] - old_velocity[0]
+                acceleration_y = new_velocity[1] - old_velocity[1]
+                new["acceleration"] = [ acceleration_x, acceleration_y]
+        if old.get("traveler_id"):
+            new["traveler_id"] = old["traveler_id"]
+        else:
+            new["traveler_id"] = self.get_traveler_id()
         new["seen"] = True,
 
         return new
 
     def read_frame(self, contours):
-        travelers = [] 
+        checked_travelers = []
         traveler = {}
         for contour in contours:
             area = cv2.contourArea(contour)
@@ -104,18 +112,18 @@ class Tracker:
                     if vad["distance"] <= self._tracking_threshold:
                         traveler = self.populate_traveler(
                             traveler, unchecked_traveler, velocity)
-                        travelers.append( unchecked_traveler )
+                        checked_travelers.append( unchecked_traveler )
                 current_travelers.append( traveler )
         self._unchecked_travelers = current_travelers;
         # pdb.set_trace()
-        self._travelers.append(traveler)
+        self._travelers.append(checked_travelers)
         if len(self._travelers) > self._traveler_history_depth:
             self._travelers.pop(0)
- 
+
 def main():
     detector_config = {
         'detector_history': 100,
-        'detector_threshold': 40,
+        'detector_threshold': 20,
         'area_threshold': 50,
         'grey_threshold': 255
     }
@@ -136,13 +144,17 @@ def main():
 
     ret, frame = cap.read()
     # ret = True
-
+    count = 0
     while ret:
         # Get layers
         mask = jd.mask( frame )
-        tracker.read_frame( jd.contours( mask ) )
+        print( f"Count: {count}")
+        count += 1
+        contours = jd.contours( mask )
+        tracker.read_frame(contours)
         cv2.imshow("Juggling", frame)
         cv2.imshow("Mask", mask)
+        #pdb.set_trace()
 
         key = cv2.waitKey(1)
         if key == 27:
