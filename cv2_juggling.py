@@ -3,24 +3,32 @@ import sys
 from core.detector import Detector
 from core.orientation import Orientation
 from layers.pose_detection.pose_detector import PoseDetector
+from layers.contours.contours import Contours
 
 def main():
     filename = str(sys.argv[-1])
-    detector_config = {
-        'detector_history': 100,
-        'detector_threshold': 40,
-        'area_threshold': 50,
-        'grey_threshold': 255
-    }
-    pose_detector_config = {
-        'model_asset_path': 'layers/pose_detection/pose_landmarker_heavy.task'
+    config = {
+        'detector':{
+            'detector_history': 100,
+            'detector_threshold': 40,
+            'area_threshold': 50,
+            'grey_threshold': 255
+        }
+        , 'pose_detector':{
+            'model_asset_path': 'layers/pose_detection/pose_landmarker_heavy.task'
+        }
+        , 'contours':{
+            'outline_color': (0,255,0)
+            , 'outline_thickness': 2
+        }
     }
     # should populate orientation_config, pass to Orientation
 
     cap = cv2.VideoCapture(filename)
     orientation = Orientation(filename)
-    jd = Detector( detector_config ) 
-    pose = PoseDetector( pose_detector_config )
+    jd = Detector(config.get('detector')) 
+    pose = PoseDetector( config.get('pose_detector'))
+    cntrs = Contours( config.get('contours'))
 
     cv2.namedWindow("Juggling")
     cv2.namedWindow("Mask")
@@ -33,6 +41,7 @@ def main():
     while ret:
         mask = jd.mask( frame )
         pose.get_pose( frame )
+        frame = cntrs.draw( frame, { 'contours':jd.contours(mask) } )
         cv2.imshow("Juggling", frame)
         cv2.imshow("Mask", pose.draw( mask ) ) 
 
