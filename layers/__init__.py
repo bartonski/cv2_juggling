@@ -1,3 +1,6 @@
+from .pose_detection import PoseDetector
+from .contours import Contours
+
 class Layer:
     def __init__(self,config):
         self.config=config

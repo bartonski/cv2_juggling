@@ -1,8 +1,5 @@
 import cv2
 
-from core.orientation import Orientation
-from core.detector import Detector
-
 class Contours:
 
     def __init__(self,config):
@@ -60,6 +57,10 @@ def main():
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
+
+    from filters import Orientation
+    from core.detector import Detector
+
     main()
 
 

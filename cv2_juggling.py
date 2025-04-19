@@ -1,9 +1,9 @@
 import cv2
 import sys
 from core.detector import Detector
-from core.orientation import Orientation
-from layers.pose_detection.pose_detector import PoseDetector
-from layers.contours.contours import Contours
+from filters import Orientation
+from layers import PoseDetector
+from layers import Contours
 
 def main():
     filename = str(sys.argv[-1])
