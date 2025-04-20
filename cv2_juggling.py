@@ -19,7 +19,7 @@ def main():
         }
         ,'detector':{
             'detector_history': 100,
-            'detector_threshold': 40,
+            'detector_threshold': 90,
             'area_threshold': 50,
             'grey_threshold': 255
         }
@@ -77,6 +77,7 @@ def main():
         frame = grid_lines.draw(frame)
         frame = framerange.draw(frame)
         frame = cntrs.draw( frame, { 'contours':jd.contours(mask) } )
+        frame = pose.draw(frame)
         cv2.imshow("Juggling", frame)
         # cv2.imshow("Mask", pose.draw( mask ) ) 
 
