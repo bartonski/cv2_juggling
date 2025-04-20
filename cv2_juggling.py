@@ -5,6 +5,7 @@ from filters import Orientation
 from filters import FrameRange
 from layers import PoseDetector
 from layers import Contours
+from layers import GridLines
 
 def main():
     filename = str(sys.argv[-1])
@@ -38,6 +39,23 @@ def main():
     pose = PoseDetector( config.get('pose_detector'))
     cntrs = Contours( config.get('contours'))
 
+    height =  int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    if( orientation.swap_width_and_height ):
+        height, width = width, height
+        
+    grid_lines= {
+        'height': height
+        , 'width': width
+        , 'x_offset': 0
+        , 'y_offset': 0
+        , 'grid_color': ( 0x7F, 0x7F, 0x7F )
+        , 'grid_linewidth': 4
+        , 'grid_spacing': 100
+    }
+
+    grid_lines = GridLines( grid_lines )
+
     cv2.namedWindow("Juggling")
     cv2.namedWindow("Mask")
 
@@ -56,6 +74,7 @@ def main():
 
         mask = jd.mask( frame )
         pose.get_pose( frame )
+        frame = grid_lines.draw(frame)
         frame = framerange.draw(frame)
         frame = cntrs.draw( frame, { 'contours':jd.contours(mask) } )
         cv2.imshow("Juggling", frame)

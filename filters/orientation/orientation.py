@@ -5,6 +5,7 @@ import cv2
 class Orientation:
     def __init__(self, file_path):
         self.rotation_code=None
+        self.rotation = None
         self.file_path = file_path
         try:
             # Probe the file to get metadata
@@ -19,15 +20,15 @@ class Orientation:
                     side_data_list = stream.get('side_data_list', [])
                     for side_data in side_data_list:
                         if 'rotation' in side_data:
-                            rotation = int(side_data['rotation'])
-                            self.rotation_code = self.get_rotation_code(rotation)
+                            self.rotation = int(side_data['rotation'])
+                            self.rotation_code = self.get_rotation_code(self.rotation)
                             return None
                     
                     # Check if rotation is stored in tags
                     tags = stream.get('tags', {})
                     if 'rotate' in tags:
-                        rotation = int(tags['rotate'])
-                        self.rotation_code = self.get_rotation_code(rotation)
+                        self.rotation = int(tags['rotate'])
+                        self.rotation_code = self.get_rotation_code(self.rotation)
                         return None
 
         except ffmpeg.Error as e:
@@ -53,6 +54,12 @@ class Orientation:
             return cv2.rotate(frame, self.rotation_code) 
         else:
             return frame
+
+    def swap_width_and_height(self):
+        rotation = self.rotation
+        if (rotation == 90 ) or (rotation == 270) or (rotation == -90):
+            return True
+        return False
 
 # Example usage
 # orientation = get_video_orientation('video.mp4')

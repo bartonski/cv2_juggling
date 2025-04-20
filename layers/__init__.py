@@ -12,3 +12,4 @@ class Layer:
     # Draw layer on top of image
     def draw(self, image):
         pass
+from .grid_lines import GridLines
