@@ -1,5 +1,7 @@
 from .pose_detection import PoseDetector
 from .contours import Contours
+from .video_info import VideoInfo
+from .grid_lines import GridLines
 
 class Layer:
     def __init__(self,config):
@@ -12,4 +14,3 @@ class Layer:
     # Draw layer on top of image
     def draw(self, image):
         pass
-from .grid_lines import GridLines

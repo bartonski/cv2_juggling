@@ -6,12 +6,21 @@ from filters import FrameRange
 from layers import PoseDetector
 from layers import Contours
 from layers import GridLines
+from layers import VideoInfo
 
 def main():
     filename = str(sys.argv[-1])
     cap = cv2.VideoCapture(filename)
     config = {
-        'frame_range':{
+        'video_info':{
+            'cap': cap
+            , 'filename': filename
+            , 'width': int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+            , 'height': int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+            , 'frame_rate': int(cap.get(cv2.CAP_PROP_FPS))
+            , 'frame_count': int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        }
+        ,'frame_range':{
             'cap': cap,
             'start_frame': 11,
             'end_frame': 660,
@@ -38,6 +47,7 @@ def main():
     jd = Detector(config.get('detector')) 
     pose = PoseDetector( config.get('pose_detector'))
     cntrs = Contours( config.get('contours'))
+    video_info = VideoInfo( config.get('video_info'))
 
     height =  int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -75,6 +85,7 @@ def main():
         mask = jd.mask( frame )
         pose.get_pose( frame )
         frame = grid_lines.draw(frame)
+        frame = video_info.draw(frame)
         frame = framerange.draw(frame)
         frame = cntrs.draw( frame, { 'contours':jd.contours(mask) } )
         frame = pose.draw(frame)
