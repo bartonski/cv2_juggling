@@ -60,6 +60,8 @@ number of passes, each pass can output image data and/or text. Video data can be
 
 ## Resources
 
+### [My Notes](./NOTES.md)
+
 ### Videos
 
 * [Object Tracking with Opencv and Python - YouTube](https://www.youtube.com/watch?v=O3b8lVF93jU)
