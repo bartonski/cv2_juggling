@@ -11,7 +11,29 @@ from layers import VideoInfo
 def main():
     filename = str(sys.argv[-1])
     cap = cv2.VideoCapture(filename)
-    config = {
+    filter_config = {
+        'frame_range':{
+            'cap': cap,
+            'start_frame': 11,
+            'end_frame': 660,
+            'print_frame_number': True
+        }
+    }
+
+    core_config = {
+        'detector':{
+            'detector_history': 100,
+            'detector_threshold': 90,
+            'area_threshold': 50,
+            'grey_threshold': 255
+        }
+        , 'contours':{
+            'outline_color': (0,255,0)
+            , 'outline_thickness': 2
+        }
+    }
+
+    layer_config = {
         'video_info':{
             'cap': cap
             , 'filename': filename
@@ -20,34 +42,18 @@ def main():
             , 'frame_rate': int(cap.get(cv2.CAP_PROP_FPS))
             , 'frame_count': int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         }
-        ,'frame_range':{
-            'cap': cap,
-            'start_frame': 11,
-            'end_frame': 660,
-            'print_frame_number': True
-        }
-        ,'detector':{
-            'detector_history': 100,
-            'detector_threshold': 90,
-            'area_threshold': 50,
-            'grey_threshold': 255
-        }
         , 'pose_detector':{
             'model_asset_path': 'layers/pose_detection/pose_landmarker_heavy.task'
-        }
-        , 'contours':{
-            'outline_color': (0,255,0)
-            , 'outline_thickness': 2
         }
     }
     # should populate orientation_config, pass to Orientation
 
     orientation = Orientation(filename)
-    framerange = FrameRange( config.get('frame_range'))
-    jd = Detector(config.get('detector')) 
-    pose = PoseDetector( config.get('pose_detector'))
-    cntrs = Contours( config.get('contours'))
-    video_info = VideoInfo( config.get('video_info'))
+    framerange = FrameRange( filter_config.get('frame_range'))
+    jd = Detector(core_config.get('detector')) 
+    pose = PoseDetector( layer_config.get('pose_detector'))
+    cntrs = Contours( core_config.get('contours'))
+    video_info = VideoInfo( layer_config.get('video_info'))
 
     height =  int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
