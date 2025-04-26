@@ -63,6 +63,56 @@ number of passes, each pass can output image data and/or text. Video data can be
     | Site Swap throw | Show path of Even/Odd/Both site swaps                 | Image |
     | Catch count   | Show the current number of catches                | Image, Text |
 
+## `config_writer.py`
+
+A GUI to write configuration:
+
+* Filters
+    * Video info
+        * Filename
+        * Width
+        * Height
+        * Frame rate
+        * Frame count
+        * Rotation
+    * Crop
+        * Top
+        * Bottom
+        * Left
+        * Right
+    * Frame range
+        * Start frame
+        * End frame
+        * Print frame number
+* Core
+    * Detector
+        * Detector history
+        * Detector threshold
+        * Area threshold
+        * Grey threshold
+    * Color Tracking
+        * Array of objects
+            * Array of color ranges
+    * Contours
+        * Outline color
+        * Outline thickness
+        * Centers
+        * Trails
+    * Pose detection
+        * Elbows: Tray plane
+    * Object Tracking
+* Display layers
+    * Grid lines
+        * X offset
+        * Y offset
+        * Grid color
+        * Grid linewidth
+        * Grid spacing
+    * Text on screen
+        * Video info from filters
+        * Frame number
+    * Pose
+
 ## Resources
 
 ### [My Notes](./NOTES.md)
