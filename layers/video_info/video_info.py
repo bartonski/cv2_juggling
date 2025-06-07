@@ -10,18 +10,48 @@ class VideoInfo:
         self._height=config['height']
         self._frame_rate=config['frame_rate']
         self._frame_count=config['frame_count']
+        self._shadow_offset=config['shadow_offset']
+        self._font_color=config['font_color']
+        self._shadow_color=config['shadow_color']
+        self._font_scale=config['font_scale']
+        self._font=config['font']
+        self._thickness=config['thickness']
         #self._foo=config['foo']
         # ...
 
-    def draw(self,image,arguments=None):
+    def _draw_text(self,image,text,location,font,font_scale,font_color,thickness):
+        shadow_location = (location[0]+self._shadow_offset[0],
+                           location[1]+self._shadow_offset[1] )
+        shadow_color = self._shadow_color
+        
+        cv2.putText(image,text,shadow_location,font,font_scale,shadow_color,thickness)
+        cv2.putText(image,text,location,font,font_scale,font_color,thickness)
 
-        cv2.putText(image, f"File Name: {self._filename}", (60, 120), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
-        cv2.putText(image, f"Width: {self._width}", (60, 180), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
-        cv2.putText(image, f"Height: {self._height}", (60, 240), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
-        cv2.putText(image, f"Frame rate: {self._frame_rate}", (60, 300), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
-        cv2.putText(image, f"Frame count: {self._frame_count}", (60, 360), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
-        cv2.putText(image, f"Image height: {image.shape[0]}", (60, 420), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
-        cv2.putText(image, f"Image width: {image.shape[1]}", (60, 480), cv2.FONT_HERSHEY_PLAIN, 4, (255, 255, 255), 3 )
+    def draw(self,image,arguments=None):
+        font = self._font
+        font_scale = self._font_scale
+        font_color = self._font_color
+        thickness = self._thickness
+
+        s=image.shape
+
+        info_lines = [
+              f"File Name: {self._filename}"
+            , f"Width: {self._width}"
+            , f"Width: {self._height}"
+            , f"Width: {self._frame_rate}"
+            , f"Width: {self._frame_count}"
+            , f"Width: {s[0]}"
+            , f"Width: {s[1]}"
+        ]
+
+        line_height=30
+        x = 60
+        y = line_height
+        for line in info_lines:
+            y = y + line_height
+            self._draw_text(image,line, (x,y), font, font_scale, font_color, thickness)
+        
         # arguments is an optional dict
         # Draw on image 
         return image 
@@ -38,6 +68,12 @@ def main():
         , 'height': int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         , 'frame_rate': int(cap.get(cv2.CAP_PROP_FPS))
         , 'frame_count': int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        , 'shadow_offset': (2, 2)
+        , 'font_color': (255,255,255)
+        , 'shadow_color': (0,0,0)
+        , 'font_scale': 1
+        , 'font': cv2.FONT_HERSHEY_PLAIN
+        , 'thickness': 1
         # , 'foo': foo
         # , 'foo': foo
         # , 'foo': foo
