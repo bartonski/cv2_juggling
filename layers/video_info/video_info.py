@@ -29,23 +29,34 @@ class VideoInfo:
 
     def draw(self,image,arguments=None):
         font = self._font
-        font_scale = self._font_scale
+        scale = self._font_scale
         font_color = self._font_color
         thickness = self._thickness
 
         s=image.shape
+        header_height = image.shape[1] / 5
 
         info_lines = [
               f"File Name: {self._filename}"
             , f"Width: {self._width}"
-            , f"Width: {self._height}"
-            , f"Width: {self._frame_rate}"
-            , f"Width: {self._frame_count}"
-            , f"Width: {s[0]}"
-            , f"Width: {s[1]}"
+            , f"Height: {self._height}"
+            , f"Frame rate: {self._frame_rate}"
+            , f"Frame count: {self._frame_count}"
+            , f"Image width: {s[0]}"
+            , f"Image height: {s[1]}"
+            , f"Line height: "
+            , f"Font scale: "
         ]
 
-        line_height=30
+        count = len(info_lines) + 1
+        (box_width, box_height), baseline = cv2.getTextSize( info_lines[0], font, 1, thickness )
+
+        line_height=int(header_height/count)
+        font_scale = scale * baseline * (count)/(count+8)
+
+        info_lines[-2] = f"Line height: {line_height}"
+        info_lines[-1] = f"Font scale: {font_scale}"
+        
         x = 60
         y = line_height
         for line in info_lines:
@@ -73,7 +84,7 @@ def main():
         , 'shadow_color': (0,0,0)
         , 'font_scale': 1
         , 'font': cv2.FONT_HERSHEY_PLAIN
-        , 'thickness': 1
+        , 'thickness': 3
         # , 'foo': foo
         # , 'foo': foo
         # , 'foo': foo
