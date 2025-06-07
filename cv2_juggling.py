@@ -41,6 +41,12 @@ def main():
             , 'height': int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
             , 'frame_rate': int(cap.get(cv2.CAP_PROP_FPS))
             , 'frame_count': int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            , 'shadow_offset': (2, 2)
+            , 'font_color': (255,255,255)
+            , 'shadow_color': (0,0,0)
+            , 'font_scale': 0.5
+            , 'font': cv2.FONT_HERSHEY_PLAIN
+            , 'thickness': 2
         }
         , 'pose_detector':{
             'model_asset_path': 'layers/pose_detection/pose_landmarker_heavy.task'
