@@ -127,3 +127,17 @@ A GUI to write configuration:
 
 * [python - Frame from video is upside down after extracting - Stack Overflow](https://stackoverflow.com/questions/53097092/frame-from-video-is-upside-down-after-extracting)
 * [OpenCV - Stream video to web browser/HTML page - PyImageSearch](https://pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/)
+
+### Inspiration, Insight, and Methods
+
+* [GitHub - Jamesmcozens/Bimodal-Multi-Object-Localisation-Siteswap-Inference-and-Analysis-for-Competitive-Juggling](https://github.com/Jamesmcozens/Bimodal-Multi-Object-Localisation-Siteswap-Inference-and-Analysis-for-Competitive-Juggling)
+    * [The Paper](https://ieeexplore.ieee.org/document/10706333)
+    * [Example Videos](https://www.youtube.com/watch?v=f5KnoGcK6So&list=PLWtN-KJsWmthw4U7PDDyAyeDx_qVGlbNt&index=1)
+    * Todo: Document methods/insights
+* [Detect Throw Events](https://www.kaggle.com/code/smeschke/detect-throw-events/notebook) --
+    * Methods and insights
+    * Uses pose estimation to find wrist location
+    * Compares the vertical graph of the vertical positions of wrist and ball to find the throw and catch positions.
+* [Jack Boyce's Hawkeye](https://github.com/jkboyce/hawkeye)
+    * Methods and insights
+        * Does initial arc calculation to determine camera tilt calculation, acceleration of gravity. Has good arc fitting algorithms.
