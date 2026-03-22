@@ -63,8 +63,9 @@ def main():
 
     height =  int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    if( orientation.swap_width_and_height ):
+    if( orientation.swap_width_and_height() ):
         height, width = width, height
+        print( "height and width are swapped" )
         
     grid_lines= {
         'height': height
