@@ -14,13 +14,16 @@ class GridLines:
         # ...
 
     def draw(self,image,arguments=None):
+        height, width = self._height, self._width
+        print( f"width: {width}, height: {height}, shape: {image.shape}" )
+
         # Draw horizontal lines
-        for y in range(self._y_offset, self._height, self._grid_spacing):
-            cv2.line(image, (0,y), (self._width,y), self._grid_color, self._grid_linewidth)
+        for y in range(self._y_offset, height, self._grid_spacing):
+            cv2.line(image, (0,y), (width,y), self._grid_color, self._grid_linewidth)
 
         # Draw vertical lines
-        for x in range(self._x_offset, self._width, self._grid_spacing):
-            cv2.line(image, ( x, 0), (x, self._height), self._grid_color, self._grid_linewidth  )
+        for x in range(self._x_offset, width, self._grid_spacing):
+            cv2.line(image, ( x, 0), (x, height), self._grid_color, self._grid_linewidth  )
         # arguments is an optional dict
         # Draw on image 
         return image 
@@ -31,9 +34,7 @@ def main():
     cap = cv2.VideoCapture(filename)
 
     config = {
-        'height': int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-        , 'width': int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-        , 'x_offset': 0
+          'x_offset': 0
         , 'y_offset': 0
         , 'grid_color': ( 0x7F, 0x7F, 0x7F )
         , 'grid_linewidth': 4
