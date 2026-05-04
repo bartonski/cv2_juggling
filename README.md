@@ -141,3 +141,86 @@ A GUI to write configuration:
 * [Jack Boyce's Hawkeye](https://github.com/jkboyce/hawkeye)
     * Methods and insights
         * Does initial arc calculation to determine camera tilt calculation, acceleration of gravity. Has good arc fitting algorithms.
+
+
+Notes on the data structure of `cv2_juggling`
+
+I pulled the various configuration structures out of `cv2_juggling.py`
+and realized that I need to do some refactoring. Here's the `config.json`:
+
+~~~ {.json}
+{
+    "filter_config": {
+        "frame_range": {
+            "cap": null,
+            "start_frame": 11,
+            "end_frame": 660,
+            "print_frame_number": true
+        }
+    },
+    "core_config": {
+        "detector": {
+            "detector_history": 100,
+            "detector_threshold": 90,
+            "area_threshold": 50,
+            "grey_threshold": 255
+        },
+        "contours": {
+            "outline_color": [
+                0,
+                255,
+                0
+            ],
+            "outline_thickness": 2
+        }
+    },
+    "layer_config": {
+        "video_info": {
+            "cap": null,
+            "filename": null,
+            "width": null,
+            "height": null,
+            "frame_rate": null,
+            "frame_count": null,
+            "shadow_offset": [
+                2,
+                2
+            ],
+            "font_color": [
+                255,
+                255,
+                255
+            ],
+            "shadow_color": [
+                0,
+                0,
+                0
+            ],
+            "font_scale": 0.5,
+            "font": null,
+            "thickness": 2
+        },
+        "pose_detector": {
+            "model_asset_path": "layers/pose_detection/pose_landmarker_heavy.task"
+        }
+    },
+    "grid_lines": {
+        "x_offset": 0,
+        "y_offset": 0,
+        "grid_color": [
+            127,
+            127,
+            127
+        ],
+        "grid_linewidth": 4,
+        "grid_spacing": 100
+    }
+}
+~~~
+
+This has several problems:
+
+1. Several objects have a `"cap"` attribute which is a `cv2.capture` object. This is run time
+data, and doesn't belong in a configuration file.
+1. `video_info` is also run time data, and while I do want to send video information to the screen in a display layer, `layer_config` is not the place to store it.
+1. There's no clear differantiation between 'core' and 'filters'.
